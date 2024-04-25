@@ -10,7 +10,6 @@ const MovieDetail: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { movies, credits } = useSelector((state: RootState) => state.movie);
   const movie = movies.find((m) => m.id.toString() === id);
-
   const [userRating, setUserRating] = useState<number | null>(null);
   const [showNotification, setShowNotification] = useState(false);
 

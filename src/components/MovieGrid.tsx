@@ -1,8 +1,6 @@
 import React from 'react'
 import MovieCard from './MovieCard';
 
-type Props = {}
-
 const MovieGrid: React.FC<{ filteredMovies: any[]; getStarRating: (voteAverage: number) => string }> = ({ filteredMovies, getStarRating }) => (
     <div className="flex justify-between">
       {/* Movie Cards */}
