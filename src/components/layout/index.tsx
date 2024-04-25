@@ -7,7 +7,7 @@ type Props = {}
 
 const Layout = (props: Props) => {
   return (
-    <main className="relative ">
+    <main className="">
         <Header/>
         <div className='min-h-screen '>
         <Outlet/>

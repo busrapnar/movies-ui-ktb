@@ -1,24 +1,29 @@
-import Layout from "@/components/layout";
-import { FilmDetail, Home, PopularFilms } from "@/pages";
-import { createBrowserRouter } from "react-router-dom";
+import React from 'react';
+import { useRoutes } from 'react-router-dom';
+import Layout from '@/components/layout';
+import { Home,  } from '@/pages';
+import MovieDetail from '@/pages/movie-detail';
+import Movies from '@/pages/popular-films';
 
-export const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Layout />,
-      children: [
-        {
-          path: "/",
-          element: <Home />,
-        },
-        {
-          path: "film/:id",
-          element: <FilmDetail />,
-        },
-        {
-            path: "popular-films",
-            element: <PopularFilms />,
-        }
-      ],
-    },
-  ]);
+const routes = [
+  {
+    path: '/',
+    element: <Layout />,
+    children: [
+      {
+        path: '/',
+        element: <Home />,
+      },
+      {
+        path: 'movie/:id',
+        element: <MovieDetail />,
+      },
+    ],
+  },
+];
+
+export const RouterProvider: React.FC = () => {
+  const element = useRoutes(routes);
+
+  return <>{element}</>;
+}
