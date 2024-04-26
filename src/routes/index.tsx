@@ -3,7 +3,7 @@ import { useRoutes } from 'react-router-dom';
 import Layout from '@/components/layout';
 import { Home,  } from '@/pages';
 import MovieDetail from '@/pages/movie-detail';
-import Movies from '@/pages/popular-films';
+
 
 const routes = [
   {
@@ -25,5 +25,5 @@ const routes = [
 export const RouterProvider: React.FC = () => {
   const element = useRoutes(routes);
 
-  return <>{element}</>;
+  return <>{element}</>
 }

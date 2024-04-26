@@ -1,30 +1,29 @@
-import React from 'react'
+import React from 'react';
 import { Card } from '../ui/card';
 
-type Props = {}
+type Props = {
+  genres: any[];
+  selectedGenres: number[];
+  handleGenreChange: (genreId: number) => void;
+};
 
-const GenreFilter: React.FC<{
-    genres: any[];
-    selectedGenres: number[];
-    handleGenreChange: (e: React.ChangeEvent<HTMLInputElement>, genreId: number) => void;
-  }> = ({ genres, selectedGenres, handleGenreChange }) => (
-    <Card className="border w-72 h-[360px] rounded-sm flex flex-col justify-center gap-2">
-      <h1 className="text-xl font-medium px-6 py-2 border-b">Filter by Genre:</h1>
-      <div className="flex flex-col px-6 gap-2 overflow-auto">
-        {genres.map((genre) => (
-          <label key={genre.id} className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              value={genre.id}
-              checked={selectedGenres.includes(genre.id)}
-              onChange={(e) => handleGenreChange(e, genre.id)}
-              className="mr-1"
-            />
-            <span>{genre.name}</span>
-          </label>
-        ))}
-      </div>
-    </Card>
-  );
+const GenreFilter: React.FC<Props> = ({ genres, selectedGenres, handleGenreChange }) => (
+  <Card className="border w-72 py-2 rounded-sm flex flex-col justify-center gap-2">
+    <h1 className="text-xl font-medium px-6 py-2 border-b">Filter by Genre:</h1>
+    <div className="flex flex-wrap px-6 gap-2 py-2">
+      {genres.map((genre) => (
+        <button
+          key={genre.id}
+          className={`py-1 px-2 rounded-full border ${
+            selectedGenres.includes(genre.id) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
+          }`}
+          onClick={() => handleGenreChange(genre.id)}
+        >
+          {genre.name}
+        </button>
+      ))}
+    </div>
+  </Card>
+);
 
-export default GenreFilter
+export default GenreFilter;

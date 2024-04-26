@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from 'axios';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/store";
+import { addMovieRating, fetchMovieCredits, fetchMovieGenres, fetchMovies } from "./movieThunks";
 
 interface Movie {
   id: number;
@@ -10,6 +10,7 @@ interface Movie {
   vote_count: number;
   overview: string;
   release_date: string;
+  director: string;
   profile_path: string;
 }
 
@@ -37,71 +38,16 @@ const initialState: MovieState = {
   search: "",
   isLoading: false,
   error: null,
-  showNotification: false, // Başlangıçta bildirimi gizli olarak ayarladık
+  showNotification: false,
 };
 
-// Asenkron thunk'larınız ve action'larınız 
-export const fetchMovies = createAsyncThunk(
-  "movie/fetchMovies",
-  async () => {
-    const response = await axios.get('https://api.themoviedb.org/3/movie/popular', {
-      params: {
-        api_key: "65fab0811fedb36f607d9dc186472015",
-        page: 1,
-        language: 'en-US',
-      },
-    });
-    return response.data.results.map((movie: any) => ({
-      ...movie,
-      release_date: movie.release_date.split('-').reverse().join('-')
-    }));
-  }
-);
-export const fetchMovieCredits = createAsyncThunk(
-  "movie/fetchMovieCredits",
-  async (movieId: number) => {
-    const response = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits`, {
-      params: {
-        api_key: "65fab0811fedb36f607d9dc186472015",
-      },
-    });
-    
-    return response.data.cast;
-  }
-);
 
-export const fetchMovieGenres = createAsyncThunk(
-  "movie/fetchMovieGenres",
-  async () => {
-    const response = await axios.get('https://api.themoviedb.org/3/genre/movie/list', {
-      params: {
-        api_key: "65fab0811fedb36f607d9dc186472015",
-        language: 'en-US', 
-      },
-    });
-    return response.data.genres;
-  }
-);
-
-export const addMovieRating = createAsyncThunk(
-  "movie/addMovieRating",
-  async ({ movieId, rating }: { movieId: number; rating: number }) => {
-    const response = await axios.post(`https://api.themoviedb.org/3/movie/${movieId}/rating`, {
-      value: rating,
-    }, {
-      params: {
-        api_key: "65fab0811fedb36f607d9dc186472015",
-      },
-    });
-    
-    return response.data;
-  }
-);
+// Slice oluşturma
 const movieSlice = createSlice({
   name: "movie",
   initialState,
   reducers: {
-    addSearch: (state, action) => {
+    addSearch: (state, action: PayloadAction<string>) => {
       state.search = action.payload;
       state.filteredMovies = state.movies.filter(movie => movie.title.toLowerCase().includes(state.search.toLowerCase()));
     },
@@ -143,9 +89,14 @@ const movieSlice = createSlice({
   },
 });
 
+// Reducer'ı export etme
 export const { addSearch, hideNotification } = movieSlice.actions; 
+
+// Selector'ları export etme
 export const getMovies = (state: RootState) => state.movie.movies;
 export const getFilteredMovies = (state: RootState) => state.movie.filteredMovies;
 export const getMovieCredits = (state: RootState) => state.movie.credits;
 export const movieDataStore = (state: RootState) => state.movie;
+
+// Reducer'ı export etme
 export default movieSlice.reducer;

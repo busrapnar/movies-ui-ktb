@@ -1,17 +1,18 @@
-import Header from './header'
-import Footer from './footer'
-import { Outlet } from 'react-router-dom'
+import { Outlet } from "react-router-dom";
+import Header from "./header";
+import Footer from "./footer";
 
 const Layout = () => {
-  return (
-    <main className="">
-        <Header/>
-        <div className='min-h-screen '>
-        <Outlet/>
-        </div>
-        <Footer/>
-    </main>
-  )
-}
 
-export default Layout
+  return (
+    <main className="container mx-auto">
+      <Header />
+      <div >
+        <Outlet />
+      </div>
+      <Footer />
+    </main>
+  );
+};
+
+export default Layout;

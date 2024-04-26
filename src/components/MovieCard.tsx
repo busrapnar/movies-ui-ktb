@@ -14,6 +14,7 @@ const MovieCard: React.FC<{ movie: any; getStarRating: (voteAverage: number) => 
         />
         <div className="flex flex-col gap-1 px-2 rounded">
           <CardTitle className="text-lg font-medium ">{movie.title}</CardTitle>
+          <CardDescription>{movie.director}</CardDescription>
           <div className="flex items-center">
             <span className="text-xl">{getStarRating(movie.vote_average)}</span>
             <span className="ml-2 text-sm">({movie.vote_count} oy)</span>

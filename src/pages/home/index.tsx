@@ -1,18 +1,17 @@
-import MovieGrid from "@/components/MovieGrid";
-import GenreFilter from "@/components/filters/GenreFilter";
-import RatingFilter from "@/components/filters/RatingFilter";
-import { Card, CardDescription, CardTitle } from "@/components/ui/card";
-import { AppDispatch, RootState } from "@/store";
-import { fetchMovieGenres, fetchMovies } from "@/store/movie/movieSlice";
-import { RatIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { AppDispatch, RootState } from "@/store";
+import GenreFilter from "@/components/filters/GenreFilter";
+import RatingFilter from "@/components/filters/RatingFilter";
+import MovieGrid from "@/components/MovieGrid";
+import SearchBar from "@/components/filters/SearchBar";
+import { fetchMovieGenres, fetchMovies } from "@/store/movie/movieThunks";
 
 const Home: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const movies = useSelector((state: RootState) => state.movie.movies);
   const genres = useSelector((state: RootState) => state.movie.genres);
+
   const [filter, setFilter] = useState<string>("");
   const [ratings, setRatings] = useState<number[]>([]);
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
@@ -26,11 +25,6 @@ const Home: React.FC = () => {
     dispatch(fetchMovieGenres());
   }, [dispatch]);
 
-  const getStarRating = (voteAverage: number): string => {
-    const rating = Math.round((voteAverage / 2) * 10) / 10;
-    return "⭐".repeat(rating) + "☆".repeat(5 - rating);
-  };
-
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilter(e.target.value);
   };
@@ -43,30 +37,22 @@ const Home: React.FC = () => {
       setRatings([...ratings, rating]);
     }
   };
-
-  const handleGenreChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    genreId: number
-  ) => {
-    const isChecked = e.target.checked;
-    if (isChecked) {
-      setSelectedGenres([...selectedGenres, genreId]);
+  const handleGenreChange = (genreId: number) => {
+    if (selectedGenres.includes(genreId)) {
+      setSelectedGenres(selectedGenres.filter(id => id !== genreId));
     } else {
-      setSelectedGenres(selectedGenres.filter((id) => id !== genreId));
+      setSelectedGenres([...selectedGenres, genreId]);
     }
   };
-
   const filteredMovies = movies.filter((movie) => {
     const titleMatch = movie.title.toLowerCase().includes(filter.toLowerCase());
     const ratingMatch =
-      ratings.length === 0
-        ? true
-        : ratings.includes(Math.floor(movie.vote_average));
+      ratings.length === 0 ? true : ratings.includes(Math.floor(movie.vote_average / 2));
     const genreMatch =
       selectedGenres.length === 0
         ? true
         : selectedGenres.some((id) => movie.genre_ids.includes(id));
-
+  
     return titleMatch && ratingMatch && genreMatch;
   });
 
@@ -74,26 +60,19 @@ const Home: React.FC = () => {
     setCurrentPage(pageNumber);
   };
 
+  const getStarRating = (voteAverage: number): string => {
+    const rating = Math.round((voteAverage / 2) * 10) / 10;
+    return "⭐".repeat(rating) + "☆".repeat(5 - rating);
+  };
+
   return (
-    <div className="container mx-auto mt-10">
+    <div className="mt-10">
       <h1 className="text-4xl font-medium mb-4">Popular Movies</h1>
-      <div className="mb-4 flex flex-col">
-        <label htmlFor="filter" className="mr-2 text-xl font-medium">
-          Filter by Title:
-        </label>
-        <input
-          type="text"
-          id="filter"
-          value={filter}
-          onChange={handleFilterChange}
-          placeholder="Search..."
-          className="border rounded px-2 py-1"
-        />
-      </div>
-      <div className="flex justify-between">
+      <SearchBar filter={filter} handleFilterChange={handleFilterChange} />
+      <div className="flex gap-2 ">
         <div className="flex flex-col gap-2">
-          <RatingFilter ratings={ratings} handleRatingChange={handleRatingChange} />
-          <GenreFilter genres={genres} selectedGenres={selectedGenres} handleGenreChange={handleGenreChange}/>
+        <RatingFilter ratings={ratings} handleRatingChange={handleRatingChange} />
+          <GenreFilter genres={genres} selectedGenres={selectedGenres} handleGenreChange={handleGenreChange} />
         </div>
         <MovieGrid filteredMovies={filteredMovies} getStarRating={getStarRating} />
       </div>

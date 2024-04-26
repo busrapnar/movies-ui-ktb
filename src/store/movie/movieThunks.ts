@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios';
 
+// Asenkron thunk'ları burada tanımla
 export const fetchMovies = createAsyncThunk(
   "movie/fetchMovies",
   async () => {

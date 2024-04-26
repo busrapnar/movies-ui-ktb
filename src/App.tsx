@@ -1,7 +1,6 @@
-import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { ThemeProvider } from './components/theme-provider';
 
+import { BrowserRouter as Router } from 'react-router-dom'
+import { ThemeProvider } from './components/theme-provider';
 import { Provider } from 'react-redux';
 import { RouterProvider } from './routes';
 import { store } from './store';
