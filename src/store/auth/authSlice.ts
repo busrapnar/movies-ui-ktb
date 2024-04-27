@@ -1,11 +1,11 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from 'axios';
 import { RootState } from "@/store";
 
 interface AuthState {
   sessionId: string | null;
   isLoading: boolean;
-  error: string | null;
+  error: string | undefined | null; 
 }
 
 const initialState: AuthState = {
@@ -18,7 +18,7 @@ export const login = createAsyncThunk(
   "auth/login",
   async () => {
     try {
-      // 1. Request Token Oluşturma
+      //Request Token Oluşturma
       const requestTokenResponse = await axios.get('https://api.themoviedb.org/3/authentication/token/new', {
         params: {
           api_key: "65fab0811fedb36f607d9dc186472015",
@@ -26,10 +26,10 @@ export const login = createAsyncThunk(
       });
       const requestToken = requestTokenResponse.data.request_token;
 
-      // 2. İzin Alma ve Yönlendirme
+      //İzin Alma ve Yönlendirme
       window.location.href = `https://www.themoviedb.org/authenticate/${requestToken}?redirect_to=${window.location.href}`;
 
-      // 3. Session Oluşturma
+      //Session Oluşturma
       const sessionResponse = await axios.post(
         `https://api.themoviedb.org/3/authentication/session/new?api_key=65fab0811fedb36f607d9dc186472015`,
         { request_token: requestToken }
@@ -39,14 +39,14 @@ export const login = createAsyncThunk(
       // Session Token'ı saklama
       localStorage.setItem('sessionId', sessionId);
 
-      console.log("Giriş başarılı!"); // Giriş başarılı olduğunda console log
+      console.log("Giriş başarılı!");
       return sessionId;
     } catch (error) {
+      console.error('Giriş işlemi başarısız oldu:', error);
       throw new Error('Oturum açma işlemi başarısız oldu.');
     }
   }
 );
-
 export const logout = createAsyncThunk(
   "auth/logout",
   async () => {

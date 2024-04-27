@@ -78,11 +78,11 @@ const movieSlice = createSlice({
       .addCase(addMovieRating.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(addMovieRating.fulfilled, (state, action) => {
+      .addCase(addMovieRating.fulfilled, (state) => {
         state.isLoading = false;
         state.showNotification = true; // Bildirim popup'ını göster
       })
-      .addCase(addMovieRating.rejected, (state, action) => {
+      .addCase(addMovieRating.rejected, (state) => {
         state.isLoading = false;
         state.error = "Oy gönderilemedi: Kimlik bilgileri geçersiz veya eksik.";
       });

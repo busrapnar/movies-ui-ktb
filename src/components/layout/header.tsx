@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useCallback } from "react";
 import { login, logout, authDataStore } from "@/store/auth/authSlice";
 import { Button } from "../ui/button";
+import { AppDispatch } from "@/store";
 
 const Header = () => {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   const { sessionId } = useSelector(authDataStore);
 
