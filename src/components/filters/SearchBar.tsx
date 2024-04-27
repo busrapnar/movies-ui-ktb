@@ -19,7 +19,7 @@ const SearchBar: React.FC<Props> = ({ filter, handleFilterChange }) => {
         value={filter}
         onChange={handleFilterChange}
         placeholder="Search Movie..."
-        className="border rounded-md px-2 py-3 text-accent hover:border-primary "
+        className="border rounded-md px-2 py-3 text-primary hover:border-primary "
       />
     </div>
   );
