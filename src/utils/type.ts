@@ -15,6 +15,7 @@ export interface Movie {
     id: number;
     name: string;
     character: string;
+    profile_path: string;
   }
   
   export interface Genre {

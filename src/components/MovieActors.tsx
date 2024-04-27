@@ -3,19 +3,13 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { Card, CardDescription } from './ui/card';
+import { Credits } from '@/utils/type';
 
-interface Cast {
-  id: number;
-  name: string;
-  character: string;
-  profile_path: string;
+interface MovieActorsProps {
+  credits: Credits[];
 }
 
-interface Props {
-  credits: Cast[];
-}
-
-export const MovieActors: React.FC<Props> = ({ credits }) => {
+export const MovieActors: React.FC<MovieActorsProps> = ({ credits }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -28,7 +22,7 @@ export const MovieActors: React.FC<Props> = ({ credits }) => {
     <div className='min-h-screen flex flex-col gap-4 mt-5'>
       <h2 className="text-2xl mt-4">Oyuncular</h2>
       <Slider {...settings}>
-        {credits.map((cast: Cast) => (
+      {credits.map((cast) => (
           <div key={cast.id}>
             <Card className='flex flex-col gap-2 w-44 h-48'>
               <img src={`https://image.tmdb.org/t/p/w200${cast.profile_path}`} alt="" className='w-full h-32 rounded-t-lg' />

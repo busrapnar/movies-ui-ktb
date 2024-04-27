@@ -23,6 +23,11 @@ const MovieDetail: React.FC = () => {
   }, [dispatch, movie]);
 
   const handleRatingChange = (rating: number) => {
+    if (!movie) {
+      
+      return;
+    }
+  
     setUserRating(rating);
     dispatch(addMovieRating({ movieId: movie.id, rating: rating }));
     setShowNotification(true);

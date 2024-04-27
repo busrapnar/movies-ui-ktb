@@ -17,16 +17,15 @@ type Props = {
   getStarRating: (voteAverage: number) => string;
 };
 const MovieCard: React.FC<Props> = ({ movie, getStarRating }) => (
-  <Card className=''>
-    <Link to={`/movie/${movie.id}`} className="flex flex-col gap-2">
+  <Card >
+    <Link to={`/movie/${movie.id}`} className="flex flex-col">
       <img
         src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
         alt={`${movie.title} Poster`}
         className="w-full h-80 rounded-t-lg"
       />
-      <div className="flex flex-col max-w-96 justify-center px-2 rounded">
-        <CardTitle className="text-lg font-medium h-16 flex items-center">{movie.title}</CardTitle>
-        <CardDescription>{movie.director}</CardDescription>
+      <div className="flex flex-col max-w-96 gap-1 justify-center px-3 rounded">
+        <CardTitle className="text-lg font-medium py-1 flex items-center">{movie.title}</CardTitle>
         <div className="flex items-center justify-between">
           <span className="text-xl">{getStarRating(movie.vote_average)}</span>
           <span className="ml-2 text-sm">({movie.vote_count} vote)</span>

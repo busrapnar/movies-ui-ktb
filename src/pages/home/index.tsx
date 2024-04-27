@@ -17,7 +17,7 @@ const Home: React.FC = () => {
   const [ratings, setRatings] = useState<number[]>([]);
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(20);
+  const [totalPages] = useState<number>(20);
 
   useEffect(() => {
     dispatch(fetchMovies(currentPage));
@@ -67,7 +67,10 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="mt-10 min-h-screen">
+    <div className="flex flex-col justify-between min-h-screen">
+
+   
+    <div className="mt-10 ">
       <h1 className="text-4xl font-medium mb-4">Popular Movies</h1>
       <SearchBar filter={filter} handleFilterChange={handleFilterChange} />
       <div className="flex gap-8">
@@ -77,7 +80,9 @@ const Home: React.FC = () => {
         </div>
         <MovieGrid filteredMovies={filteredMovies} getStarRating={getStarRating} />
       </div>
-      <Pagination currentPage={currentPage} totalPages={totalPages} goToPage={goToPage} />
+      
+    </div>
+    <Pagination currentPage={currentPage} totalPages={totalPages} goToPage={goToPage} />
     </div>
   );
 };

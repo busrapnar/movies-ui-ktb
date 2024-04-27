@@ -13,7 +13,7 @@ interface Movie {
 const MovieGrid: React.FC<{ filteredMovies: Movie[]; getStarRating: (voteAverage: number) => string }> = ({ filteredMovies, getStarRating }) => (
     <div >
       {/* Movie Cards */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
+      <div className="grid xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 gap-x-4 gap-y-6">
         {filteredMovies.map((movie) => (
           <MovieCard key={movie.id} movie={movie} getStarRating={getStarRating} />
         ))}
