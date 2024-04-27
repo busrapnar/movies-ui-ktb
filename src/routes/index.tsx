@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRoutes } from 'react-router-dom';
-import Layout from '@/components/layout';
+import Layout from '@/layout';
 import { Home,  } from '@/pages';
 import MovieDetail from '@/pages/movie-detail';
 

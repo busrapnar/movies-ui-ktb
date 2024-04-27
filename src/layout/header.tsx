@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { ModeToggle } from '../toggle-button';
+import { ModeToggle } from '../components/toggle-button';
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback } from "react";
 import { login, logout, authDataStore } from "@/store/auth/authSlice";
-import { Button } from "../ui/button";
+import { Button } from "../components/ui/button";
 import { AppDispatch } from "@/store";
 
 const Header = () => {
