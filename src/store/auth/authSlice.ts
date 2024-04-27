@@ -43,11 +43,8 @@ export const login = createAsyncThunk(
                 `https://api.themoviedb.org/3/authentication/session/new?api_key=65fab0811fedb36f607d9dc186472015`,
                 {request_token: token}
             );
-            console.log("sessionResponse", sessionResponse);
             const sessionId = sessionResponse.data.session_id;
             localStorage.setItem('sessionId', sessionId);
-
-            console.log("Giriş başarılı!");
             return sessionId;
         } catch (error) {
             console.error('Giriş işlemi başarısız oldu:', error);
@@ -73,6 +70,7 @@ export const logout = createAsyncThunk(
 
             // Session Token'ı temizleme
             localStorage.removeItem('sessionId');
+            localStorage.removeItem('token')
         } catch (error) {
             throw new Error('Oturum kapatma işlemi başarısız oldu.');
         }

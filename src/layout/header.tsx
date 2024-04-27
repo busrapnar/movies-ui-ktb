@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { ModeToggle } from '../components/toggle-button';
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback } from "react";
-import { login, logout, authDataStore } from "@/store/auth/authSlice";
+import {logout, authDataStore, createToken} from "@/store/auth/authSlice";
 import { Button } from "../components/ui/button";
 import { AppDispatch } from "@/store";
 
@@ -12,7 +12,7 @@ const Header = () => {
   const { sessionId } = useSelector(authDataStore);
 
   const handleLogin = useCallback(() => {
-    dispatch(login());
+    dispatch(createToken());
   }, [dispatch]);
 
   const handleLogout = useCallback(() => {
@@ -21,10 +21,9 @@ const Header = () => {
 
   return (
     <div className='flex justify-between border-b items-center py-8 '>
-        <div className='flex gap-10 items-baseline'>
+        <div className=''>
             <Link to={"/"} className="text-6xl font-bold text-teal-600">TMDB</Link>
             
-            <Link to={"/"} className="text-xl ">Home</Link>
         </div>
         <div className='flex gap-6 items-center '>
           {sessionId ? (

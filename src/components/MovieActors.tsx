@@ -11,7 +11,6 @@ interface MovieActorsProps {
 
 export const MovieActors: React.FC<MovieActorsProps> = ({ credits }) => {
   const settings = {
-    dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 6,
@@ -19,7 +18,7 @@ export const MovieActors: React.FC<MovieActorsProps> = ({ credits }) => {
   };
 
   return (
-    <div className='min-h-screen flex flex-col gap-4 mt-5'>
+    <div className='min-h-screen flex flex-col gap-4 mt-5 text-accent'>
       <h2 className="text-2xl mt-4">Oyuncular</h2>
       <Slider {...settings}>
       {credits.map((cast) => (
