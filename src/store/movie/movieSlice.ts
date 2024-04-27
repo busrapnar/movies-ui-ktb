@@ -1,34 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/store";
 import { addMovieRating, fetchMovieCredits, fetchMovieGenres, fetchMovies } from "./movieThunks";
-
-interface Movie {
-  id: number;
-  title: string;
-  poster_path: string | null;
-  vote_average: number;
-  vote_count: number;
-  overview: string;
-  release_date: string;
-  director: string;
-  profile_path: string;
-}
-
-interface Genre {
-  id: number;
-  name: string;
-}
+import { Credits, Genre, Movie } from "@/utils/type";
 
 interface MovieState {
   movies: Movie[];
-  credits: any[];
+  credits: Credits[]; 
   genres: Genre[]; 
   filteredMovies: Movie[];
   isLoading: boolean;
   search: string;
-  error: any;
+  error: string | null | undefined; 
   showNotification: boolean; 
 }
+
 
 const initialState: MovieState = {
   movies: [],

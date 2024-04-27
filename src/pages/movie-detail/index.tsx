@@ -28,8 +28,6 @@ const MovieDetail: React.FC = () => {
     setShowNotification(true);
   };
 
-  
-
   useEffect(() => {
     let timer: NodeJS.Timeout;
   
@@ -66,12 +64,10 @@ const MovieDetail: React.FC = () => {
           <p className="text-lg mt-4">{movie.overview}</p>
           <p>{movie.director}</p>
           <MovieRating
-  userRating={userRating}
-  handleRatingChange={handleRatingChange}
-/>
-
+            userRating={userRating}
+            handleRatingChange={handleRatingChange}
+          />
           <RatingNotification showNotification={showNotification} />
-          
         </div>
       </div>
       <MovieActors credits={credits} />

@@ -4,11 +4,11 @@ import axios from 'axios';
 // Asenkron thunk'ları burada tanımla
 export const fetchMovies = createAsyncThunk(
   "movie/fetchMovies",
-  async () => {
+  async (page: number) => {
     const response = await axios.get('https://api.themoviedb.org/3/movie/popular', {
       params: {
         api_key: "65fab0811fedb36f607d9dc186472015",
-        page: 1,
+        page: page, // İstenen sayfa numarasını parametre olarak alıyoruz
         language: 'en-US',
       },
     });

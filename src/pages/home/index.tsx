@@ -6,6 +6,7 @@ import RatingFilter from "@/components/filters/RatingFilter";
 import MovieGrid from "@/components/MovieGrid";
 import SearchBar from "@/components/filters/SearchBar";
 import { fetchMovieGenres, fetchMovies } from "@/store/movie/movieThunks";
+import Pagination from "@/components/Pagination";
 
 const Home: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -16,14 +17,12 @@ const Home: React.FC = () => {
   const [ratings, setRatings] = useState<number[]>([]);
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(20);
 
   useEffect(() => {
-    dispatch(fetchMovies()).then((action: any) => {
-      setTotalPages(action.payload.total_pages);
-    });
+    dispatch(fetchMovies(currentPage));
     dispatch(fetchMovieGenres());
-  }, [dispatch]);
+  }, [dispatch, currentPage]);
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilter(e.target.value);
@@ -37,6 +36,7 @@ const Home: React.FC = () => {
       setRatings([...ratings, rating]);
     }
   };
+
   const handleGenreChange = (genreId: number) => {
     if (selectedGenres.includes(genreId)) {
       setSelectedGenres(selectedGenres.filter(id => id !== genreId));
@@ -44,6 +44,7 @@ const Home: React.FC = () => {
       setSelectedGenres([...selectedGenres, genreId]);
     }
   };
+
   const filteredMovies = movies.filter((movie) => {
     const titleMatch = movie.title.toLowerCase().includes(filter.toLowerCase());
     const ratingMatch =
@@ -66,31 +67,17 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="mt-10">
+    <div className="mt-10 min-h-screen">
       <h1 className="text-4xl font-medium mb-4">Popular Movies</h1>
       <SearchBar filter={filter} handleFilterChange={handleFilterChange} />
-      <div className="flex gap-8 justify-between ">
+      <div className="flex gap-8">
         <div className="flex flex-col gap-2">
         <RatingFilter ratings={ratings} handleRatingChange={handleRatingChange} />
           <GenreFilter genres={genres} selectedGenres={selectedGenres} handleGenreChange={handleGenreChange} />
         </div>
         <MovieGrid filteredMovies={filteredMovies} getStarRating={getStarRating} />
       </div>
-      <div className="mt-4 flex justify-center bg-black">
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-          <button
-            key={page}
-            onClick={() => goToPage(page)}
-            className={`mx-1 px-4 py-2 rounded ${
-              currentPage === page
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-800"
-            }`}
-          >
-            {page}
-          </button>
-        ))}
-      </div>
+      <Pagination currentPage={currentPage} totalPages={totalPages} goToPage={goToPage} />
     </div>
   );
 };
