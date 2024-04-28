@@ -1,17 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-interface Props {
-  showNotification: boolean;
-}
+export const RatingNotification: React.FC<{ showNotification: boolean }> = ({ showNotification }) => {
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
 
-export const RatingNotification: React.FC<Props> = ({ showNotification }) => (
-  <>
-    {showNotification && (
-      <div className="fixed inset-0 flex items-center justify-center">
-        <div className="bg-accent  text-primary p-4 rounded shadow-lg">
-          Oy gönderildi!
+    if (showNotification) {
+      timer = setTimeout(() => {
+        
+        showNotification = false;
+      }, 2000);
+    }
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [showNotification]);
+
+  return (
+    <>
+      {showNotification && (
+        <div className="bg-accent text-primary p-2 mt-4 rounded-md">
+          Thank you for your rating!
         </div>
-      </div>
-    )}
-  </>
-);
+      )}
+    </>
+  );
+};

@@ -28,7 +28,6 @@ const Header = () => {
         <div className='flex gap-6 items-center '>
           {sessionId ? (
             <>
-              
               <Link to = {"/"} className="border-primary border px-4 py-2 rounded-lg hover:bg-primary hover:text-white">Home</Link>
               <Button onClick={handleLogout}>Logout</Button>
             </>

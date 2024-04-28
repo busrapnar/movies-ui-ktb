@@ -64,7 +64,7 @@ const movieSlice = createSlice({
       })
       .addCase(addMovieRating.fulfilled, (state) => {
         state.isLoading = false;
-        state.showNotification = true; // Bildirim popup'ını göster
+        state.showNotification = true;
       })
       .addCase(addMovieRating.rejected, (state) => {
         state.isLoading = false;
