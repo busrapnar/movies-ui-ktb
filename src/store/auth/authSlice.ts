@@ -1,6 +1,9 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from 'axios';
-import {RootState} from "@/store";
+import { RootState } from "@/store";
+
+const VITE_API_URL = import.meta.env.VITE_API_URL;
+const VITE_API_KEY = import.meta.env.VITE_API_KEY;
 
 interface AuthState {
     sessionId: string | null;
@@ -17,10 +20,9 @@ const initialState: AuthState = {
 export const createToken = createAsyncThunk("auth/createToken", async () => {
     try {
         const currentURL = window.location.href;
-        //Request Token Oluşturma
-        const requestTokenResponse = await axios.get('https://api.themoviedb.org/3/authentication/token/new', {
+        const requestTokenResponse = await axios.get(`${VITE_API_URL}/authentication/token/new`, {
             params: {
-                api_key: "65fab0811fedb36f607d9dc186472015",
+                api_key: VITE_API_KEY,
             },
         });
         const requestToken = requestTokenResponse.data.request_token;
@@ -38,10 +40,9 @@ export const login = createAsyncThunk(
     async () => {
         try {
             const token: string = localStorage.getItem("token") || "";
-            //Session Oluşturma
             const sessionResponse = await axios.post(
-                `https://api.themoviedb.org/3/authentication/session/new?api_key=65fab0811fedb36f607d9dc186472015`,
-                {request_token: token}
+                `${VITE_API_URL}/authentication/session/new?api_key=${VITE_API_KEY}`,
+                { request_token: token }
             );
             const sessionId = sessionResponse.data.session_id;
             localStorage.setItem('sessionId', sessionId);
@@ -52,6 +53,7 @@ export const login = createAsyncThunk(
         }
     }
 );
+
 export const logout = createAsyncThunk(
     "auth/logout",
     async () => {
@@ -61,16 +63,14 @@ export const logout = createAsyncThunk(
                 throw new Error('Oturum bilgisi bulunamadı.');
             }
 
-            // Oturumu sonlandırma
-            await axios.delete(`https://api.themoviedb.org/3/authentication/session?api_key=65fab0811fedb36f607d9dc186472015`, {
+            await axios.delete(`${VITE_API_URL}/authentication/session?api_key=${VITE_API_KEY}`, {
                 data: {
                     session_id: sessionId,
                 },
             });
 
-            // Session Token'ı temizleme
             localStorage.removeItem('sessionId');
-            localStorage.removeItem('token')
+            localStorage.removeItem('token');
         } catch (error) {
             throw new Error('Oturum kapatma işlemi başarısız oldu.');
         }

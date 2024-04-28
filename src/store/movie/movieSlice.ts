@@ -26,7 +26,6 @@ const initialState: MovieState = {
   showNotification: false,
 };
 
-
 // Slice oluşturma
 const movieSlice = createSlice({
   name: "movie",
