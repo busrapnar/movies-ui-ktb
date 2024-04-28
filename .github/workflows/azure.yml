@@ -3,10 +3,9 @@ on:
   push:
     branches: [ "main" ]
   workflow_dispatch:
-
 env:
-  VITE_API_KEY=${{ vars.API_KEY }}
-  VITE_API_URL=${{ vars.API_URL }}
+  VITE_API_KEY=${{ secrets.API_KEY }}
+  VITE_API_URL=${{ secrets.API_URL }}
 
 jobs:
   build:
