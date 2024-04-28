@@ -9,6 +9,7 @@ export interface Movie {
     director: string;
     profile_path: string;
     backdrop_path: string;
+    genre_ids: number[];
   }
   
   export interface Credits {
