@@ -40,7 +40,7 @@ const Home: React.FC = () => {
   const handleGenreChange = (genreId: number) => {
     const genreIndex = selectedGenres.indexOf(genreId);
     if (genreIndex !== -1) {
-      setSelectedGenres(selectedGenres.filter((id, index) => index !== genreIndex));
+      setSelectedGenres(selectedGenres.filter(( index) => index !== genreIndex));
     } else {
       setSelectedGenres([...selectedGenres, genreId]);
     }
