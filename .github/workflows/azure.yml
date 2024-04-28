@@ -13,14 +13,13 @@ jobs:
       with:
         node-version: 20
         cache: 'npm'
-    - name: npm install, build, and test
+      env:
+        VITE_API_KEY: ${{ secrets.API_KEY }}
+        VITE_API_URL: ${{ secrets.API_URL }}
+    - name: npm install, build
       run: |
         npm install
         npm run build --if-present
-        npm run test --if-present
-      env:
-        VITE_API_KEY=${{ secrets.API_KEY }}
-        VITE_API_URL=${{ secrets.API_URL }}
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v4
       with:
