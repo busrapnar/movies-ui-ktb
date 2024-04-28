@@ -1,8 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios';
-
-const API_URL = import.meta.env.API_URL;
-const API_KEY = import.meta.env.API_KEY;
+const API_URL = import.meta.env.API_URL || import.meta.env.VITE_API_URL;
+const API_KEY = import.meta.env.API_KEY || import.meta.env.VITE_API_KEY;
 
 export const fetchMovies = createAsyncThunk(
   "movie/fetchMovies",

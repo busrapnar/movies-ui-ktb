@@ -2,17 +2,19 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from 'axios';
 import { RootState } from "@/store";
 
-const API_URL = import.meta.env.API_URL;
-const API_KEY = import.meta.env.API_KEY;
+const API_URL = import.meta.env.API_URL || import.meta.env.VITE_API_URL;
+const API_KEY = import.meta.env.API_KEY || import.meta.env.VITE_API_KEY;
 
 interface AuthState {
     sessionId: string | null;
     isLoading: boolean;
+    isRedirecting: boolean;
     error: string | undefined | null;
 }
 
 const initialState: AuthState = {
     sessionId: localStorage.getItem('sessionId') || null,
+    isRedirecting: false,
     isLoading: false,
     error: null,
 };
@@ -83,14 +85,13 @@ const authSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(createToken.pending, (state) => {
-                state.isLoading = true;
-            })
             .addCase(createToken.fulfilled, (state) => {
                 state.isLoading = false;
+                state.isRedirecting = true;
             })
             .addCase(createToken.rejected, (state, action) => {
                 state.isLoading = false;
+                state.isRedirecting = false;
                 state.error = action.error.message;
             })
             .addCase(login.pending, (state) => {

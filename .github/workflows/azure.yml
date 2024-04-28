@@ -4,6 +4,10 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+env:
+  VITE_API_KEY=${{ env.API_KEY }}
+  VITE_API_URL=${{ env.API_URL }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -45,3 +49,4 @@ jobs:
         app-name: movie-ui-ktb
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: .
+
