@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from 'axios';
 import { RootState } from "@/store";
 
-const VITE_API_URL = import.meta.env.VITE_API_URL;
-const VITE_API_KEY = import.meta.env.VITE_API_KEY;
+const API_URL = import.meta.env.API_URL;
+const API_KEY = import.meta.env.API_KEY;
 
 interface AuthState {
     sessionId: string | null;
@@ -20,9 +20,9 @@ const initialState: AuthState = {
 export const createToken = createAsyncThunk("auth/createToken", async () => {
     try {
         const currentURL = window.location.href;
-        const requestTokenResponse = await axios.get(`${VITE_API_URL}/authentication/token/new`, {
+        const requestTokenResponse = await axios.get(`${API_URL}/authentication/token/new`, {
             params: {
-                api_key: VITE_API_KEY,
+                api_key: API_KEY,
             },
         });
         const requestToken = requestTokenResponse.data.request_token;
@@ -41,7 +41,7 @@ export const login = createAsyncThunk(
         try {
             const token: string = localStorage.getItem("token") || "";
             const sessionResponse = await axios.post(
-                `${VITE_API_URL}/authentication/session/new?api_key=${VITE_API_KEY}`,
+                `${API_URL}/authentication/session/new?api_key=${API_KEY}`,
                 { request_token: token }
             );
             const sessionId = sessionResponse.data.session_id;
@@ -63,7 +63,7 @@ export const logout = createAsyncThunk(
                 throw new Error('Oturum bilgisi bulunamadı.');
             }
 
-            await axios.delete(`${VITE_API_URL}/authentication/session?api_key=${VITE_API_KEY}`, {
+            await axios.delete(`${API_URL}/authentication/session?api_key=${API_KEY}`, {
                 data: {
                     session_id: sessionId,
                 },

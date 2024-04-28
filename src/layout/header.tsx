@@ -29,7 +29,7 @@ const Header = () => {
           {sessionId ? (
             <>
               <Button onClick={handleLogout}>Logout</Button>
-              <button onClick={() => window.location.href = "/"}>Home</button>
+              <Link to = {"/"}>Home</Link>
             </>
           ) : (
             <Button variant={"outline"} size={"lg"} className="text-lg " onClick={handleLogin}>Login</Button>

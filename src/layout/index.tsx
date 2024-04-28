@@ -10,7 +10,6 @@ import Footer from "./footer";
 const Layout = () => {
     const dispatch: AppDispatch = useDispatch();
     const sessionId = useSelector(state => state.sessionId);
-    console.log("sessionId", sessionId);
     useEffect(() => {
         if(sessionId === undefined || sessionId === null) {
             dispatch(login())
