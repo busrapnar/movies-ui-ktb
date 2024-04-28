@@ -18,7 +18,7 @@ type Props = {
 };
 const MovieCard: React.FC<Props> = ({ movie, getStarRating }) => (
   <Card >
-    <Link to={`/movie/${movie.id}`} className="flex flex-col">
+    <Link to={`/movie/${movie.id}`} className="flex flex-col min-w-80">
       <img
         src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
         alt={`${movie.title} Poster`}

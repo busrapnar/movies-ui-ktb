@@ -68,13 +68,13 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col justify-between min-h-screen">
+    <div className="flex flex-col justify-between min-h-screen min-w-[600px]">
 
    
-    <div className="mt-10 ">
+    <div className="mt-10">
       <h1 className="text-4xl font-medium mb-4">Popular Movies</h1>
       <SearchBar filter={filter} handleFilterChange={handleFilterChange} />
-      <div className="flex gap-8">
+      <div className="flex gap-8 ">
         <div className="flex flex-col gap-2">
         <RatingFilter ratings={ratings} handleRatingChange={handleRatingChange} />
           <GenreFilter genres={genres} selectedGenres={selectedGenres} handleGenreChange={handleGenreChange} />
