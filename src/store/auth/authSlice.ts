@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from 'axios';
 import { RootState } from "@/store";
 
-const API_URL = import.meta.env.API_URL || import.meta.env.VITE_API_URL;
-const API_KEY = import.meta.env.API_KEY || import.meta.env.VITE_API_KEY;
+const API_URL = import.meta.env.VITE_API_URL;
+const API_KEY = import.meta.env.VITE_API_KEY;
 
 interface AuthState {
     sessionId: string | null;

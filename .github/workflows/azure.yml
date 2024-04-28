@@ -5,8 +5,8 @@ on:
   workflow_dispatch:
 
 env:
-  VITE_API_KEY=${{ env.API_KEY }}
-  VITE_API_URL=${{ env.API_URL }}
+  VITE_API_KEY=${{ vars.API_KEY }}
+  VITE_API_URL=${{ vars.API_URL }}
 
 jobs:
   build:
